@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WorldFirst API — Payment Infrastructure for AI Agents & E-Commerce</title>
+  <meta name="description" content="The payment API built for AI agents. Collect marketplace payouts, pay suppliers in CNY, lock FX rates — all via API. Same-day settlement to China.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wf-red: #FF0051;
+      --wf-red-dark: #BC0050;
+      --wf-red-glow: rgba(255, 0, 81, 0.15);
+      --wf-dark: #1F2323;
+      --wf-text: #484F56;
+      --wf-text-light: #90969A;
+      --wf-bg: #FBFBFC;
+      --wf-bg-alt: #F7F7F7;
+      --wf-card: #FFFFFF;
+      --wf-border: #E8EAED;
+      --wf-code-bg: #1a1a2e;
+      --wf-code-text: #e0e0e0;
+      --wf-accent-teal: #00D8C6;
+      --wf-accent-blue: #1677FF;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 36px;
+      --radius-pill: 300px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', -apple-system, sans-serif;
+      color: var(--wf-dark);
+      background: var(--wf-bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--wf-border);
+    }
+    .nav-inner {
+      max-width: 1232px;
+      margin: 0 auto;
+      padding: 0 32px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--wf-dark);
+    }
+    .nav-logo svg { height: 32px; }
+    .nav-logo span { font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+    .nav-logo .tag {
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--wf-red);
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      letter-spacing: 0.03em;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--wf-text);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--wf-dark); }
+
+    /* ---- BUTTONS ---- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: var(--radius-pill);
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--wf-red);
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: var(--wf-red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255, 0, 81, 0.25);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--wf-dark);
+      border: 1.5px solid var(--wf-border);
+    }
+    .btn-secondary:hover {
+      border-color: var(--wf-dark);
+      background: rgba(0,0,0,0.02);
+    }
+    .btn-dark {
+      background: var(--wf-dark);
+      color: #fff;
+    }
+    .btn-dark:hover {
+      background: #2d3133;
+      transform: translateY(-1px);
+    }
+    .btn-sm { padding: 10px 20px; font-size: 13px; }
+
+    /* ---- HERO ---- */
+    .hero {
+      padding: 160px 32px 100px;
+      text-align: center;
+      background: linear-gradient(180deg, #fff 0%, var(--wf-bg) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--wf-red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(255, 0, 81, 0.06);
+      border: 1px solid rgba(255, 0, 81, 0.15);
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--wf-red);
+      margin-bottom: 24px;
+    }
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--wf-red);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      max-width: 800px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+    .hero h1 .accent { color: var(--wf-red); }
+    .hero p {
+      font-size: 19px;
+      color: var(--wf-text);
+      max-width: 640px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ---- CODE BLOCK IN HERO ---- */
+    .hero-code {
+      max-width: 720px;
+      margin: 60px auto 0;
+      background: var(--wf-code-bg);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      text-align: left;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.15);
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dot.r { background: #ff5f57; }
+    .code-dot.y { background: #febc2e; }
+    .code-dot.g { background: #28c840; }
+    .code-header span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-left: 8px;
+    }
+    .hero-code pre {
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--wf-code-text);
+      overflow-x: auto;
+    }
+    .hero-code .kw { color: #c792ea; }
+    .hero-code .fn { color: #82aaff; }
+    .hero-code .str { color: #c3e88d; }
+    .hero-code .cm { color: #546e7a; }
+    .hero-code .num { color: #f78c6c; }
+    .hero-code .op { color: #89ddff; }
+
+    /* ---- SECTIONS ---- */
+    .section {
+      padding: 100px 32px;
+      max-width: 1232px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--wf-red);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 40px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--wf-text);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    .section-header {
+      margin-bottom: 56px;
+    }
+    .section-header.center {
+      text-align: center;
+    }
+    .section-header.center .section-subtitle {
+      margin: 0 auto;
+    }
+
+    /* ---- FLOW SECTION ---- */
+    .flow-section {
+      background: var(--wf-dark);
+      color: #fff;
+      padding: 100px 32px;
+    }
+    .flow-section .section-label { color: var(--wf-accent-teal); }
+    .flow-section .section-subtitle { color: rgba(255,255,255,0.6); }
+    .flow-grid {
+      max-width: 1232px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .flow-steps { display: flex; flex-direction: column; gap: 0; }
+    .flow-step {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      position: relative;
+    }
+    .flow-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 60px;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255,255,255,0.1);
+    }
+    .flow-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 0, 81, 0.15);
+      color: var(--wf-red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .flow-step h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .flow-step p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+    .flow-code {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .flow-code pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--wf-code-text);
+      overflow-x: auto;
+    }
+
+    /* ---- TOOLS GRID ---- */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+    .tool-card {
+      background: var(--wf-card);
+      border: 1px solid var(--wf-border);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      transition: all 0.25s ease;
+    }
+    .tool-card:hover {
+      border-color: rgba(255, 0, 81, 0.3);
+      box-shadow: 0 8px 32px rgba(255, 0, 81, 0.06);
+      transform: translateY(-2px);
+    }
+    .tool-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .tool-icon.blue { background: rgba(22, 119, 255, 0.1); }
+    .tool-icon.teal { background: rgba(0, 216, 198, 0.1); }
+    .tool-icon.red { background: rgba(255, 0, 81, 0.08); }
+    .tool-icon.orange { background: rgba(255, 128, 0, 0.1); }
+    .tool-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tool-card p {
+      font-size: 14px;
+      color: var(--wf-text);
+      line-height: 1.55;
+    }
+    .tool-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 500;
+      background: var(--wf-bg-alt);
+      color: var(--wf-text-light);
+    }
+
+    /* ---- STATS ---- */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 32px 16px;
+      background: var(--wf-card);
+      border: 1px solid var(--wf-border);
+      border-radius: var(--radius-md);
+    }
+    .stat-card .num {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--wf-dark);
+      letter-spacing: -0.02em;
+    }
+    .stat-card .num .accent { color: var(--wf-red); }
+    .stat-card .label {
+      font-size: 14px;
+      color: var(--wf-text);
+      margin-top: 4px;
+    }
+
+    /* ---- INTEGRATIONS ---- */
+    .integrations-section {
+      background: linear-gradient(180deg, var(--wf-bg) 0%, #fff 100%);
+      padding: 100px 32px;
+    }
+    .integrations-grid {
+      max-width: 1232px;
+      margin: 0 auto;
+    }
+    .integration-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .integration-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      background: var(--wf-card);
+      border: 1px solid var(--wf-border);
+      border-radius: var(--radius-md);
+      transition: all 0.25s ease;
+    }
+    .integration-card:hover {
+      border-color: var(--wf-red);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .integration-card img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: #fff;
+      flex-shrink: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    .integration-card span {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--wf-dark);
+    }
+    .integration-card .category {
+      font-size: 10px;
+      color: var(--wf-text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ---- USE CASES ---- */
+    .usecases-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .usecase-card {
+      background: var(--wf-card);
+      border: 1px solid var(--wf-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      transition: all 0.25s ease;
+    }
+    .usecase-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .usecase-card .emoji {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+    .usecase-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .usecase-card p {
+      font-size: 15px;
+      color: var(--wf-text);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .usecase-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .usecase-card li {
+      font-size: 14px;
+      color: var(--wf-text);
+      padding-left: 20px;
+      position: relative;
+    }
+    .usecase-card li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--wf-red);
+      opacity: 0.3;
+    }
+
+    /* ---- CTA ---- */
+    .cta-section {
+      padding: 100px 32px;
+      text-align: center;
+    }
+    .cta-box {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--wf-dark);
+      border-radius: var(--radius-xl);
+      padding: 80px 60px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 0, 81, 0.2) 0%, transparent 70%);
+    }
+    .cta-box h2 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+    .cta-box p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 36px;
+      position: relative;
+    }
+    .cta-buttons { display: flex; gap: 12px; justify-content: center; position: relative; }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: #1F2323;
+      color: #fff;
+      padding: 0;
+    }
+    .footer-inner {
+      max-width: 1232px;
+      margin: 0 auto;
+      padding: 56px 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+    .footer-grid h4 {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .footer-grid ul { list-style: none; }
+    .footer-grid li { margin-bottom: 10px; }
+    .footer-grid a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-grid a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-bottom img {
+      height: 20px;
+      width: auto;
+      opacity: 0.7;
+    }
+    .footer-bottom .copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+    }
+    .footer-bottom .legal {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      max-width: 480px;
+      text-align: right;
+    }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .footer-bottom .legal { text-align: center; }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .hero { padding: 120px 20px 60px; }
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .section { padding: 60px 20px; }
+      .section-title { font-size: 28px; }
+      .flow-grid { grid-template-columns: 1fr; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .usecases-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+      .cta-box { padding: 48px 24px; }
+      .cta-box h2 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="wf-logo-nav.webp" alt="WorldFirst" style="height:28px; width:auto;">
+      <span class="tag">API</span>
+    </a>
+    <div class="nav-links">
+      <a href="#tools">Tools</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#use-cases">Use Cases</a>
+      <a href="#integrations">Integrations</a>
+      <a href="https://developers.worldfirst.com" class="btn btn-sm btn-primary">Documentation</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <span class="dot"></span>
+    MCP Server Available — Works with Claude, OpenAI, LangChain
+  </div>
+  <h1>The payment API built for<br><span class="accent">AI agents</span></h1>
+  <p>Collect marketplace payouts in 20+ currencies. Pay Chinese suppliers same-day in CNY. Lock FX rates. Verify suppliers. All via API — or let your AI agent handle it autonomously.</p>
+  <div class="hero-buttons">
+    <a href="#" class="btn btn-primary">Start Building</a>
+    <a href="#" class="btn btn-secondary">View on GitHub</a>
+  </div>
+
+  <div class="hero-code">
+    <div class="code-header">
+      <div class="code-dot r"></div>
+      <div class="code-dot y"></div>
+      <div class="code-dot g"></div>
+      <span>claude_desktop_config.json</span>
+    </div>
+    <pre><code>{
+  <span class="str">"mcpServers"</span><span class="op">:</span> {
+    <span class="str">"worldfirst"</span><span class="op">:</span> {
+      <span class="str">"command"</span><span class="op">:</span> <span class="str">"npx"</span>,
+      <span class="str">"args"</span><span class="op">:</span> [<span class="str">"worldfirst-mcp-server"</span>],
+      <span class="str">"env"</span><span class="op">:</span> {
+        <span class="str">"WORLDFIRST_CLIENT_ID"</span><span class="op">:</span> <span class="str">"your_client_id"</span>,
+        <span class="str">"WORLDFIRST_ENVIRONMENT"</span><span class="op">:</span> <span class="str">"production"</span>
+      }
+    }
+  }
+}</code></pre>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section">
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num">20<span class="accent">+</span></div>
+      <div class="label">Currencies Supported</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">80<span class="accent">%</span></div>
+      <div class="label">CNY Payments Same-Day</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">200<span class="accent">+</span></div>
+      <div class="label">Markets & Countries</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">10</div>
+      <div class="label">MCP Tools for AI Agents</div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="section" id="tools">
+  <div class="section-header center">
+    <div class="section-label">MCP Tools</div>
+    <h2 class="section-title">10 tools your AI agent<br>can call right now</h2>
+    <p class="section-subtitle">Every tool is designed with rich descriptions so LLMs understand when and how to use each capability. Install once, every MCP-compatible agent works.</p>
+  </div>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon blue">💰</div>
+        <h3>check_balance</h3>
+        <span class="tool-tag">Account</span>
+      </div>
+      <p>Query World Account balances across all currencies. Check available funds before making payments.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon teal">📊</div>
+        <h3>get_fx_rate</h3>
+        <span class="tool-tag">FX</span>
+      </div>
+      <p>Get indicative FX rates for any currency pair. Informational — use for comparisons and estimates.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon teal">⚡</div>
+        <h3>get_fx_quote</h3>
+        <span class="tool-tag">FX</span>
+      </div>
+      <p>Get a tradeable FX quote with live price and expiry. Ready to lock and execute.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon teal">🔒</div>
+        <h3>lock_fx_rate</h3>
+        <span class="tool-tag">FX</span>
+      </div>
+      <p>Accept a quote and lock the rate. Protect against FX volatility on large supplier payments.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon orange">👥</div>
+        <h3>list_beneficiaries</h3>
+        <span class="tool-tag">Supplier</span>
+      </div>
+      <p>List all saved suppliers and payees. Find beneficiary IDs for payment execution.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon orange">➕</div>
+        <h3>add_beneficiary</h3>
+        <span class="tool-tag">Supplier</span>
+      </div>
+      <p>Register a new supplier for future payments. Supports Chinese bank accounts and local bank codes.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon red">✅</div>
+        <h3>verify_supplier</h3>
+        <span class="tool-tag">Supplier</span>
+      </div>
+      <p>Verify supplier bank account against business registration. Unique to WorldFirst — critical for safe sourcing.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon red">💸</div>
+        <h3>create_payment</h3>
+        <span class="tool-tag">Payment</span>
+      </div>
+      <p>Send payment to a registered beneficiary. Idempotent — safe for AI agent retries. Same-day CNY settlement.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon blue">🔍</div>
+        <h3>check_payment_status</h3>
+        <span class="tool-tag">Payment</span>
+      </div>
+      <p>Track payment settlement in real-time. Know exactly when your supplier receives funds.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-card-header">
+        <div class="tool-icon blue">📋</div>
+        <h3>get_statement</h3>
+        <span class="tool-tag">Account</span>
+      </div>
+      <p>Pull transaction history with date and currency filters. Full audit trail for agent accountability.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="flow-section" id="how-it-works">
+  <div class="flow-grid">
+    <div>
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title" style="color:#fff; margin-bottom:16px;">Your AI agent pays a<br>Chinese supplier in 6 steps</h2>
+      <p class="section-subtitle" style="margin-bottom:48px;">No human clicks. No bank portal. Your agent handles the entire payment flow — from balance check to settlement confirmation.</p>
+
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div>
+            <h4>Check balance</h4>
+            <p>Agent confirms $12,450 USD available</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div>
+            <h4>Get FX quote</h4>
+            <p>Live rate: 1 USD = 7.24 CNY, expires in 30s</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div>
+            <h4>Lock rate</h4>
+            <p>Rate locked — protected from volatility</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div>
+            <h4>Verify supplier</h4>
+            <p>Bank account matches business registration ✓</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div>
+            <h4>Execute payment</h4>
+            <p>¥36,200 CNY sent to supplier's bank</p>
+          </div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">6</div>
+          <div>
+            <h4>Confirm settlement</h4>
+            <p>Settled same-day via MYbank routing</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-code">
+      <pre><code><span class="cm">// Your AI agent's conversation:</span>
+
+<span class="cm">User: "Pay our Shenzhen supplier</span>
+<span class="cm">       $5,000 worth of CNY"</span>
+
+<span class="cm">// Agent calls WorldFirst MCP tools:</span>
+
+<span class="fn">check_balance</span>({ currency: <span class="str">"USD"</span> })
+<span class="cm">// → $12,450.00 available</span>
+
+<span class="fn">get_fx_quote</span>({
+  sell_currency: <span class="str">"USD"</span>,
+  buy_currency: <span class="str">"CNY"</span>,
+  sell_amount: <span class="str">"5000.00"</span>
+})
+<span class="cm">// → 1 USD = 7.24 CNY, quote Q-8f3a</span>
+
+<span class="fn">lock_fx_rate</span>({ quote_id: <span class="str">"Q-8f3a"</span> })
+<span class="cm">// → Rate locked ✓</span>
+
+<span class="fn">verify_supplier</span>({ beneficiary_id: <span class="str">"B-456"</span> })
+<span class="cm">// → Verified against biz registration ✓</span>
+
+<span class="fn">create_payment</span>({
+  beneficiary_id: <span class="str">"B-456"</span>,
+  amount: <span class="str">"36200.00"</span>,
+  currency: <span class="str">"CNY"</span>,
+  purpose: <span class="str">"Invoice #1234"</span>
+})
+<span class="cm">// → Payment P-789 initiated</span>
+
+<span class="fn">check_payment_status</span>({ payment_id: <span class="str">"P-789"</span> })
+<span class="cm">// → Settled (same-day) ✓</span></code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="section" id="use-cases">
+  <div class="section-header center">
+    <div class="section-label">Use Cases</div>
+    <h2 class="section-title">Built for agentic commerce</h2>
+    <p class="section-subtitle">Whether you're building an AI procurement agent or automating marketplace payouts, WorldFirst API handles the money movement.</p>
+  </div>
+
+  <div class="usecases-grid">
+    <div class="usecase-card">
+      <div class="emoji">🤖</div>
+      <h3>AI Sourcing Agent</h3>
+      <p>Build agents that autonomously find products on 1688/Alibaba, verify suppliers, negotiate terms, and execute CNY payments — all without human intervention.</p>
+      <ul>
+        <li>Supplier verification against business registration</li>
+        <li>Same-day CNY settlement via MYbank</li>
+        <li>FX rate locking for large orders</li>
+        <li>Idempotent payments safe for agent retries</li>
+      </ul>
+    </div>
+    <div class="usecase-card">
+      <div class="emoji">🛒</div>
+      <h3>Marketplace Payout Automation</h3>
+      <p>Collect payouts from Amazon, Shopify, eBay, Walmart, TikTok Shop in local currencies. Auto-consolidate into World Account. Your agent manages the float.</p>
+      <ul>
+        <li>20+ currency collection accounts</li>
+        <li>Auto-convert at optimal FX rates</li>
+        <li>Real-time balance monitoring via API</li>
+        <li>Transaction history for reconciliation</li>
+      </ul>
+    </div>
+    <div class="usecase-card">
+      <div class="emoji">📈</div>
+      <h3>FX Autopilot</h3>
+      <p>Monitor FX rates 24/7 and auto-execute forwards when conditions are met. Your agent locks the best rate for your next supplier payment — while you sleep.</p>
+      <ul>
+        <li>Live FX rate quotes via API</li>
+        <li>Forward contracts to lock rates</li>
+        <li>Rate comparison across corridors</li>
+        <li>Webhook notifications on execution</li>
+      </ul>
+    </div>
+    <div class="usecase-card">
+      <div class="emoji">🔗</div>
+      <h3>Procurement Copilot</h3>
+      <p>AI-assisted procurement with human-in-the-loop for approvals. Agent handles the busywork — balance checks, FX optimization, payment execution. You approve the big decisions.</p>
+      <ul>
+        <li>Policy-driven spending limits</li>
+        <li>Approval workflows above thresholds</li>
+        <li>Full audit trail for compliance</li>
+        <li>Multi-supplier batch payments</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section class="integrations-section" id="integrations">
+  <div class="integrations-grid">
+    <div class="section-header center">
+      <div class="section-label">Integrations</div>
+      <h2 class="section-title">Works with every platform<br>in your stack</h2>
+      <p class="section-subtitle">From AI agent frameworks to e-commerce marketplaces — WorldFirst API connects your entire commerce infrastructure.</p>
+    </div>
+
+    <div style="margin-top:48px;">
+      <!-- AI Agent Frameworks -->
+      <p style="text-align:center; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--wf-text-light); font-weight:600; margin-bottom:16px;">AI Agent Frameworks</p>
+      <div class="integration-row">
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#D4A373;">A</div>
+          <span>Claude MCP</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#1A1A1A;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364l2.0201-1.1638a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.4091-.6813zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0974-2.3616l2.603-1.5018 2.6032 1.5018v3.0036l-2.6032 1.5018-2.603-1.5018z"/></svg>
+          </div>
+          <span>OpenAI Agents</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#1C3C3C;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M2 2l4.5 4.5M2 2l4.5 4.5M22 2l-4.5 4.5M12 2v6M2 22l4.5-4.5M22 22l-4.5-4.5M12 22v-6M2 12h6M22 12h-6" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+          </div>
+          <span>LangChain</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#FF4B4B;">C</div>
+          <span>CrewAI</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#0078D4;">A</div>
+          <span>AutoGen</span>
+        </div>
+      </div>
+
+      <!-- Marketplaces -->
+      <p style="text-align:center; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--wf-text-light); font-weight:600; margin:32px 0 16px;">E-Commerce Marketplaces</p>
+      <div class="integration-row">
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#FF9900; font-size:18px; font-weight:900;">a</div>
+          <span>Amazon</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#7AB55C;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M15.337 23.979l7.216-3.842c.467-.41.69-.926.69-1.486V5.35c0-.558-.222-1.074-.688-1.486L15.339.024a2.148 2.148 0 0 0-1.837.001L6.285 3.864c-.467.412-.69.928-.69 1.486v13.3c0 .56.224 1.076.69 1.487l7.216 3.842a2.15 2.15 0 0 0 1.836 0zM12 7.401a4.6 4.6 0 1 1 0 9.2 4.6 4.6 0 0 1 0-9.2z"/></svg>
+          </div>
+          <span>Shopify</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#E53238; font-size:10px; font-weight:700; letter-spacing:-0.5px;">bay</div>
+          <span>eBay</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#0071CE;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M4 12l4-8h8l4 8-4 8H8z"/></svg>
+          </div>
+          <span>Walmart</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#1A1A1A;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.895 2.76 2.896 2.896 0 0 1-2.895-2.895 2.896 2.896 0 0 1 2.895-2.895c.3 0 .593.04.871.114v-3.5a6.338 6.338 0 0 0-.871-.06A6.35 6.35 0 0 0 3.13 15.537 6.35 6.35 0 0 0 9.479 21.89a6.35 6.35 0 0 0 6.349-6.353V8.767a8.182 8.182 0 0 0 4.773 1.526V6.85a4.831 4.831 0 0 1-1.012-.164z"/></svg>
+          </div>
+          <span>TikTok Shop</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#F16521;">E</div>
+          <span>Etsy</span>
+        </div>
+      </div>
+
+      <!-- Sourcing Platforms -->
+      <p style="text-align:center; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--wf-text-light); font-weight:600; margin:32px 0 16px;">Sourcing & Supplier Platforms</p>
+      <div class="integration-row">
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#FF6A00;">A</div>
+          <span>Alibaba</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#FF4400; font-size:9px; letter-spacing:-0.5px;">1688</div>
+          <span>1688</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#FF4747;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 19h20L12 2zm0 4l7 11H5l7-11z"/></svg>
+          </div>
+          <span>AliExpress</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#D4534B; font-size:10px;">DH</div>
+          <span>DHgate</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#D12B1E; font-size:8px;">MIC</div>
+          <span>Made-in-China</span>
+        </div>
+      </div>
+
+      <!-- Dev Tools -->
+      <p style="text-align:center; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--wf-text-light); font-weight:600; margin:32px 0 16px;">Developer Tools</p>
+      <div class="integration-row">
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#CB3837;">
+            <svg width="18" height="8" viewBox="0 0 18 7" fill="white"><path d="M0 0h18v6H9v1H5V6H0V0zm1 5h2V2h1v3h1V1H1v4zm5-4v5h2V5h2V1H6zm3 3H8V2h1v2zm2-3v4h2V2h1v3h1V2h1v3h1V1h-6z"/></svg>
+          </div>
+          <span>npm</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#3775A9;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L19.35 8 12 11.82 4.65 8 12 4.18z"/></svg>
+          </div>
+          <span>PyPI</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#1A1A1A;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </div>
+          <span>GitHub</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#FF6C37;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M13.527.099C6.955-.744.942 3.9.099 10.473c-.843 6.572 3.8 12.584 10.373 13.428 6.573.843 12.587-3.801 13.428-10.374C24.744 6.955 20.101.943 13.527.099zM10.27 12.69l-2.573.2-.25-3.22 2.573-.2.25 3.22zm4.087-.32l-2.573.2-.25-3.22 2.573-.2.25 3.22z"/></svg>
+          </div>
+          <span>Postman</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#85EA2D; color:#1A1A1A; font-size:10px; font-weight:800;">{}</div>
+          <span>OpenAPI</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#635BFF;">S</div>
+          <span>Stripe ACP</span>
+        </div>
+      </div>
+
+      <!-- Commerce & ERP -->
+      <p style="text-align:center; font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--wf-text-light); font-weight:600; margin:32px 0 16px;">Commerce & ERP</p>
+      <div class="integration-row">
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#96588A;">W</div>
+          <span>WooCommerce</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#EE672F;">M</div>
+          <span>Magento</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#13B5EA;">X</div>
+          <span>Xero</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#2CA01C;">Q</div>
+          <span>QuickBooks</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#FF4A00;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M12 2a4 4 0 0 0-4 4v4H6a4 4 0 0 0 0 8h2v-4a4 4 0 0 0 8 0v-4h2a4 4 0 0 0 0-8h-2V6a4 4 0 0 0-4-4z"/></svg>
+          </div>
+          <span>Zapier</span>
+        </div>
+        <div class="integration-card">
+          <div class="logo-mark" style="background:#6D00CC;">
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="white"><rect x="0" y="0" width="4" height="10" rx="1"/><rect x="6" y="0" width="4" height="10" rx="1"/><rect x="12" y="0" width="4" height="10" rx="1"/></svg>
+          </div>
+          <span>Make</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Start building with<br>WorldFirst API today</h2>
+    <p>Get sandbox access in minutes. Ship to production when ready.<br>Your AI agents are waiting.</p>
+    <div class="cta-buttons">
+      <a href="https://developers.worldfirst.com" class="btn btn-primary">Get API Keys</a>
+      <a href="#" class="btn" style="color:rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.2);">Talk to Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://www.worldfirst.com/uk/world-account/" target="_blank" rel="noopener">World Account</a></li>
+          <li><a href="https://www.worldfirst.com/uk/receive/" target="_blank" rel="noopener">Receive</a></li>
+          <li><a href="https://www.worldfirst.com/uk/pay/" target="_blank" rel="noopener">Pay</a></li>
+          <li><a href="https://www.worldfirst.com/uk/fx/" target="_blank" rel="noopener">FX</a></li>
+          <li><a href="https://www.worldfirst.com/uk/pay-1688/" target="_blank" rel="noopener">Pay 1688 Suppliers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="https://www.worldfirst.com/uk/ecommerce/" target="_blank" rel="noopener">E-commerce Seller</a></li>
+          <li><a href="https://www.worldfirst.com/uk/supplier-payment/" target="_blank" rel="noopener">Supplier Payment</a></li>
+          <li><a href="https://www.worldfirst.com/uk/pay-to-china/" target="_blank" rel="noopener">Pay into China</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="https://developers.worldfirst.com" target="_blank" rel="noopener">API Documentation</a></li>
+          <li><a href="#">MCP Server</a></li>
+          <li><a href="#">Agent Toolkit</a></li>
+          <li><a href="#">OpenAPI Spec</a></li>
+          <li><a href="#">API Status</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="https://www.worldfirst.com/uk/blog/" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://www.worldfirst.com/uk/customer-stories/" target="_blank" rel="noopener">Customer Stories</a></li>
+          <li><a href="https://www.worldfirst.com/uk/user-guides/" target="_blank" rel="noopener">User Guides</a></li>
+          <li><a href="https://www.worldfirst.com/uk/faqs/" target="_blank" rel="noopener">FAQs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="https://www.worldfirst.com/uk/about-us/" target="_blank" rel="noopener">About WorldFirst</a></li>
+          <li><a href="https://www.worldfirst.com/uk/why-worldfirst/" target="_blank" rel="noopener">Why WorldFirst</a></li>
+          <li><a href="https://www.worldfirst.com/uk/contact-us/" target="_blank" rel="noopener">Contact Us</a></li>
+          <li><a href="https://www.worldfirst.com/uk/security/" target="_blank" rel="noopener">Security</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <img src="wf-logo-reversed.webp" alt="WorldFirst">
+        <span class="copy">&copy; 2026, Ant International or its affiliates. All rights reserved.</span>
+      </div>
+      <p class="legal">WorldFirst is a trading name of WorldFirst UK Ltd, authorised and regulated by the Financial Conduct Authority (FRN: 900508).</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
