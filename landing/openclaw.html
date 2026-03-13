@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw × 跨境电商 — Your Financial Safeguard Agent | WorldFirst</title>
+  <meta name="description" content="AI agents run your cross-border shops. Who's watching the money? WorldFirst is your financial safeguard agent — the CFO layer for agentic commerce.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wf-red: #FF0051;
+      --wf-red-dark: #e0004a;
+      --wf-dark: #1F2323;
+      --wf-text: #484F56;
+      --wf-text-light: #6B7280;
+      --wf-text-muted: #9CA3AF;
+      --wf-bg: #FFFFFF;
+      --wf-bg-alt: #F7F8FA;
+      --wf-border: #E5E7EB;
+      --wf-border-light: #F0F1F3;
+      --wf-code-bg: #0a0b0f;
+      --wf-code-text: #c8c8d0;
+      --wf-footer-bg: #1F2323;
+      --wf-teal: #00C9B7;
+      --wf-blue: #4d9fff;
+      --wf-green: #52c41a;
+      --wf-yellow: #faad14;
+      --wf-orange: #fa8c16;
+      --wf-purple: #8250df;
+      --font: 'Poppins', sans-serif;
+      --font-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font); color: var(--wf-dark); background: var(--wf-bg); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    [data-lang="en"] .cn { display: none; }
+    [data-lang="cn"] .en { display: none; }
+
+    /* ---- NAV ---- */
+    .lang-toggle { display: flex; border: 1px solid rgba(255,255,255,0.15); border-radius: 50px; overflow: hidden; font-size: 13px; }
+    .lang-toggle button { background: none; border: none; color: rgba(255,255,255,0.4); padding: 5px 14px; cursor: pointer; font-family: var(--font); font-size: 13px; font-weight: 500; transition: all 0.2s; }
+    .lang-toggle button.active { background: var(--wf-red); color: #fff; }
+    .wf-nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--wf-border-light); }
+    .wf-nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .wf-nav-left { display: flex; align-items: center; gap: 40px; }
+    .wf-nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .wf-nav-logo img { height: 28px; width: auto; }
+    .wf-nav-links { display: flex; gap: 32px; list-style: none; }
+    .wf-nav-links a { text-decoration: none; color: var(--wf-dark); font-size: 16px; font-weight: 400; transition: color 0.2s; }
+    .wf-nav-links a:hover { color: var(--wf-red); }
+    .wf-nav-right { display: flex; align-items: center; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 24px; border-radius: 50px; font-family: var(--font); font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-outline { background: transparent; color: var(--wf-red); border: 1px solid var(--wf-red); }
+    .btn-outline:hover { background: rgba(255, 0, 81, 0.04); }
+    .btn-primary { background: var(--wf-red); color: #fff; }
+    .btn-primary:hover { background: var(--wf-red-dark); box-shadow: 0 4px 12px rgba(255, 0, 81, 0.25); }
+    .btn-lg { padding: 14px 36px; font-size: 16px; }
+
+    /* ---- HERO ---- */
+    .hero {
+      background: #08090d;
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 0, 81, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 32px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+    }
+    .hero-left { color: #fff; }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow span { color: var(--wf-red); }
+    .hero h1 {
+      font-size: clamp(32px, 4.5vw, 46px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+    .hero h1 .cross { color: rgba(255,255,255,0.25); font-weight: 300; }
+    .hero h1 .cn-title { font-family: var(--font-cn); color: var(--wf-red); }
+    .hero-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 460px;
+    }
+    .hero-sub .cn { font-family: var(--font-cn); }
+    .hero-buttons { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .hero .lang-toggle { margin-left: 8px; }
+
+    /* ---- TERMINAL ---- */
+    .terminal {
+      background: #0d0e14;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      line-height: 1.75;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .terminal-dots { display: flex; gap: 6px; }
+    .terminal-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-dots span:nth-child(1) { background: #ff5f57; }
+    .terminal-dots span:nth-child(2) { background: #ffbd2e; }
+    .terminal-dots span:nth-child(3) { background: #28ca41; }
+    .terminal-title { color: rgba(255,255,255,0.2); font-size: 11px; }
+    .terminal-body {
+      padding: 16px 18px;
+      height: 380px;
+      overflow: hidden;
+      position: relative;
+    }
+    .terminal-line {
+      white-space: nowrap;
+      opacity: 0;
+      animation: line-in 0.3s forwards;
+    }
+    .terminal-scroll {
+      animation: scroll-up 32s linear infinite;
+    }
+    @keyframes line-in { to { opacity: 1; } }
+    @keyframes scroll-up {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .t-muted { color: rgba(255,255,255,0.18); }
+    .t-time { color: rgba(255,255,255,0.12); }
+    .t-agent { color: var(--wf-blue); }
+    .t-wf { color: var(--wf-red); font-weight: 500; }
+    .t-platform { color: var(--wf-yellow); font-weight: 500; }
+    .t-ok { color: var(--wf-green); }
+    .t-warn { color: var(--wf-red); }
+    .t-amount { color: var(--wf-teal); }
+    .t-fx { color: var(--wf-purple); }
+    .t-dim { color: rgba(255,255,255,0.30); }
+    .terminal-body::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(transparent, #0d0e14);
+      pointer-events: none;
+    }
+    .terminal-body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 20px;
+      background: linear-gradient(#0d0e14, transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ---- SECTIONS ---- */
+    .section { padding: 80px 32px; }
+    .section-alt { background: var(--wf-bg-alt); }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .section-label { font-family: var(--font-mono); font-size: 12px; color: var(--wf-red); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; font-weight: 500; }
+    .section h2 { font-size: 32px; font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; color: var(--wf-dark); margin-bottom: 12px; }
+    .section h2 .cn { font-family: var(--font-cn); }
+    .section-desc { font-size: 16px; color: var(--wf-text); max-width: 660px; line-height: 1.7; margin-bottom: 40px; }
+    .section-desc .cn { font-family: var(--font-cn); }
+
+    /* ---- OPS GRID ---- */
+    .ops-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .ops-card {
+      background: #fff;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      padding: 24px 20px;
+      transition: border-color 0.2s;
+    }
+    .ops-card:hover { border-color: #ccc; }
+    .ops-card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--wf-dark);
+      margin-bottom: 6px;
+    }
+    .ops-card-title-cn {
+      font-family: var(--font-cn);
+      font-size: 12px;
+      color: var(--wf-text-muted);
+      font-weight: 400;
+    }
+    .ops-card-desc {
+      font-size: 13px;
+      color: var(--wf-text);
+      line-height: 1.55;
+    }
+    .ops-card-desc .cn { font-family: var(--font-cn); }
+    .ops-card-stat {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--wf-red);
+      margin-top: 10px;
+      font-weight: 500;
+    }
+    .ops-note {
+      font-size: 13px;
+      color: var(--wf-text-muted);
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+
+    /* ---- PROBLEM ---- */
+    .scenario {
+      background: var(--wf-code-bg);
+      border-radius: 12px;
+      padding: 32px;
+      color: var(--wf-code-text);
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .scenario .cn { font-family: var(--font-cn); }
+    .scenario .hl { color: var(--wf-red); font-weight: 500; }
+    .scenario-caption { font-size: 15px; color: var(--wf-text); font-weight: 600; }
+    .scenario-caption .cn { font-family: var(--font-cn); }
+
+    /* ---- PILLARS ---- */
+    .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .pillar {
+      background: #fff;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: border-color 0.2s;
+    }
+    .pillar:hover { border-color: #ccc; }
+    .pillar h3 { font-size: 17px; font-weight: 600; color: var(--wf-dark); margin-bottom: 8px; }
+    .pillar h3 .cn-sub { font-family: var(--font-cn); font-size: 13px; color: var(--wf-text-muted); font-weight: 400; }
+    .pillar p { font-size: 14px; color: var(--wf-text); line-height: 1.65; }
+    .pillar p .cn { font-family: var(--font-cn); }
+    .pillar.wide { grid-column: 1 / -1; }
+
+    /* ---- CONVERSATIONS ---- */
+    .conversation { background: var(--wf-bg-alt); border: 1px solid var(--wf-border); border-radius: 12px; overflow: hidden; }
+    .section-alt .conversation { background: #fff; }
+    .conv-header { padding: 14px 24px; border-bottom: 1px solid var(--wf-border-light); font-size: 13px; color: var(--wf-text-muted); display: flex; align-items: center; gap: 8px; font-weight: 500; }
+    .conv-header .dot { width: 8px; height: 8px; background: var(--wf-green); border-radius: 50%; }
+    .conv-body { padding: 24px; }
+    .conv-msg { margin-bottom: 24px; }
+    .conv-msg:last-child { margin-bottom: 0; }
+    .conv-sender { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; font-weight: 600; }
+    .conv-sender.agent { color: var(--wf-blue); }
+    .conv-sender.wf { color: var(--wf-red); }
+    .conv-text { font-size: 14px; line-height: 1.65; color: var(--wf-dark); }
+    .conv-text .cn { font-family: var(--font-cn); }
+    .conv-text code { font-family: var(--font-mono); font-size: 12px; background: rgba(0,0,0,0.06); padding: 2px 7px; border-radius: 4px; }
+    .conv-text .blocked { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 8px 16px; background: rgba(255,0,81,0.06); border: 1px solid rgba(255,0,81,0.15); border-radius: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--wf-red); font-weight: 500; }
+    .conv-text .approved { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 8px 16px; background: rgba(82,196,26,0.06); border: 1px solid rgba(82,196,26,0.2); border-radius: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--wf-green); font-weight: 500; }
+    .conv-text .waiting { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 8px 16px; background: rgba(250,173,22,0.06); border: 1px solid rgba(250,173,22,0.2); border-radius: 8px; font-family: var(--font-mono); font-size: 12px; color: var(--wf-yellow); font-weight: 500; }
+
+    /* ---- TIERS ---- */
+    .tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .tier { background: #fff; border: 1px solid var(--wf-border); border-radius: 12px; padding: 24px; }
+    .tier-label { font-family: var(--font-mono); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .tier-label.auto { color: var(--wf-green); }
+    .tier-label.monitor { color: var(--wf-yellow); }
+    .tier-label.gate { color: var(--wf-red); }
+    .tier-sublabel { font-family: var(--font-cn); font-size: 13px; color: var(--wf-text-muted); margin-bottom: 16px; }
+    .tier-tools { font-family: var(--font-mono); font-size: 12px; color: var(--wf-text); line-height: 2.1; }
+
+    /* ---- CODE ---- */
+    .code-block { background: var(--wf-code-bg); border-radius: 12px; overflow: hidden; margin: 24px 0; }
+    .code-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.35); }
+    .code-dots { display: flex; gap: 6px; }
+    .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dots span:nth-child(1) { background: #ff5f57; }
+    .code-dots span:nth-child(2) { background: #ffbd2e; }
+    .code-dots span:nth-child(3) { background: #28ca41; }
+    .code-block pre { padding: 20px; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--wf-code-text); overflow-x: auto; }
+    .code-block pre .comment { color: #555; }
+    .code-block pre .key { color: var(--wf-blue); }
+    .code-block pre .string { color: var(--wf-green); }
+
+    /* ---- COMPACT MODELS + DEPLOY ---- */
+    .compact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .compact-section h3 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: var(--wf-dark); }
+    .model-list { list-style: none; font-size: 14px; color: var(--wf-text); }
+    .model-list li { padding: 8px 0; border-bottom: 1px solid var(--wf-border-light); display: flex; justify-content: space-between; align-items: center; }
+    .model-list li:last-child { border-bottom: none; }
+    .model-name-inline { font-weight: 600; color: var(--wf-dark); }
+    .model-provider-inline { font-family: var(--font-mono); font-size: 11px; color: var(--wf-text-muted); }
+    .ecosystem-tag { font-family: var(--font-mono); font-size: 10px; color: var(--wf-red); background: rgba(255,0,81,0.08); padding: 2px 8px; border-radius: 50px; font-weight: 600; }
+
+    /* ---- FOOTER ---- */
+    .wf-footer { background: var(--wf-footer-bg); color: #fff; padding: 64px 32px 40px; }
+    .wf-footer-inner { max-width: 1280px; margin: 0 auto; }
+    .wf-footer-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px; margin-bottom: 48px; }
+    .wf-footer-col h3 { font-size: 14px; font-weight: 600; margin-bottom: 20px; }
+    .wf-footer-col ul { list-style: none; }
+    .wf-footer-col li { margin-bottom: 12px; }
+    .wf-footer-col a { color: rgba(255,255,255,0.65); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+    .wf-footer-col a:hover { color: #fff; }
+    .wf-footer-middle { display: flex; align-items: center; justify-content: space-between; padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; flex-wrap: wrap; gap: 20px; }
+    .wf-footer-social { display: flex; align-items: center; gap: 16px; }
+    .wf-footer-social span { font-size: 14px; font-weight: 600; }
+    .wf-footer-social a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 20px; transition: color 0.2s; }
+    .wf-footer-social a:hover { color: #fff; }
+    .wf-footer-legal { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.6; margin-bottom: 20px; }
+    .wf-footer-copyright { font-size: 13px; color: rgba(255,255,255,0.35); padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 34px; }
+      .terminal { display: none; }
+      .ops-grid { grid-template-columns: 1fr 1fr; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .pillar.wide { grid-column: auto; }
+      .tiers { grid-template-columns: 1fr; }
+      .compact-grid { grid-template-columns: 1fr; }
+      .wf-footer-grid { grid-template-columns: repeat(3, 1fr); }
+      .wf-nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 56px 20px; }
+      .ops-grid { grid-template-columns: 1fr; }
+      .wf-footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======== NAV ======== -->
+<nav class="wf-nav">
+  <div class="wf-nav-inner">
+    <div class="wf-nav-left">
+      <a href="https://www.worldfirst.com/uk/" class="wf-nav-logo" target="_blank">
+        <img src="https://mdn.marmot-cloud.com/worldfirst/sites/15/2026/02/20260209154944733.webp" alt="Ant International | WorldFirst">
+      </a>
+      <ul class="wf-nav-links">
+        <li><a href="https://www.worldfirst.com/uk/product/" target="_blank">Business</a></li>
+        <li><a href="https://www.worldfirst.com/uk/enterprise/" target="_blank">Enterprise</a></li>
+        <li><a href="https://www.worldfirst.com/uk/about-worldfirst/" target="_blank">About Us</a></li>
+      </ul>
+    </div>
+    <div class="wf-nav-right">
+      <a href="https://portal.worldfirst.com/login?region=GB&lang=en-GB" class="btn btn-outline" target="_blank">Login</a>
+      <a href="https://portal.worldfirst.com/register?region=GB&lang=en-GB" class="btn btn-primary" target="_blank">Sign Up</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== HERO ======== -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span>$</span> openclaw <span>×</span> cross-border ecommerce</div>
+      <h1>OpenClaw<span class="cross"> × </span><span class="cn-title">跨境电商</span></h1>
+      <p class="hero-sub">
+        <span class="en">AI agents run your shops. Who's watching the money?<br>WorldFirst is your financial safeguard agent — the CFO that never sleeps.</span>
+        <span class="cn">AI Agent 替你开店。谁在看着钱？<br>万里汇是你的资金安全 Agent——永不下线的 CFO。</span>
+      </p>
+      <div class="hero-buttons">
+        <a href="https://github.com/socialworldfirst/worldfirst-mcp-server" class="btn btn-primary" target="_blank">View on GitHub</a>
+        <a href="#integration" class="btn" style="background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.12);">
+          <span class="en">Integration Guide</span>
+          <span class="cn">接入指南</span>
+        </a>
+        <div class="lang-toggle">
+          <button class="active" onclick="setLang('en')">EN</button>
+          <button onclick="setLang('cn')">中文</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVE TERMINAL -->
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dots"><span></span><span></span><span></span></div>
+        <div class="terminal-title">worldfirst-agent — running</div>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-scroll">
+<!-- block 1 -->
+<div class="terminal-line"><span class="t-time">09:14:02</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:03</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:05</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">TikTok Shop US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:07</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">£3,200</span> <span class="t-dim">from</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:08</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">฿48,500</span> <span class="t-dim">from</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:09</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">balance:</span> <span class="t-amount">£3,200</span> · <span class="t-amount">฿48,500</span> · <span class="t-amount">$12,400</span> · <span class="t-amount">¥8,200</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-agent">[ad-agent]</span> <span class="t-dim">scaling</span> <span class="t-platform">Walmart US</span> <span class="t-dim">budget → $2,000/day</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ BLOCKED</span> <span class="t-dim">— card limit $500/day — escalating</span></div>
+<div class="terminal-line"><span class="t-time">09:16:30</span> <span class="t-wf">[worldfirst]</span> <span class="t-fx">FX quote</span> <span class="t-dim">GBP/USD</span> <span class="t-amount">1.2847</span> <span class="t-dim">interbank mid</span></div>
+<div class="terminal-line"><span class="t-time">09:16:31</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">converting</span> <span class="t-amount">£3,200 → $4,111</span> <span class="t-dim">... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:17:44</span> <span class="t-agent">[sourcing-agent]</span> <span class="t-dim">found supplier for SKU-4421 on</span> <span class="t-platform">1688</span></div>
+<div class="terminal-line"><span class="t-time">09:17:45</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">verifying 义乌市恒达贸易有限公司 ...</span> <span class="t-ok">✓ match</span></div>
+<div class="terminal-line"><span class="t-time">09:17:46</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">payment</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ supplier ... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:18:02</span> <span class="t-agent">[pricing-agent]</span> <span class="t-dim">repricing 34 SKUs on</span> <span class="t-platform">Amazon US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:18:15</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">issuing World Card for</span> <span class="t-platform">TikTok Shop</span> <span class="t-dim">ads ... limit $300/day</span></div>
+<div class="terminal-line"><span class="t-time">09:19:01</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">daily spend report:</span> <span class="t-amount">$847.20</span> <span class="t-dim">across 3 cards</span></div>
+<div class="terminal-line"><span class="t-time">09:19:30</span> <span class="t-agent">[inventory-agent]</span> <span class="t-dim">syncing stock →</span> <span class="t-platform">Shopify</span> · <span class="t-platform">Lazada</span> · <span class="t-platform">eBay</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:20:05</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">$1,890</span> <span class="t-dim">from</span> <span class="t-platform">Shopify US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:20:44</span> <span class="t-agent">[ad-agent]</span> <span class="t-dim">ROAS 4.2x on</span> <span class="t-platform">Amazon UK</span> <span class="t-dim">— maintaining budget</span></div>
+<div class="terminal-line"><span class="t-time">09:21:10</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ ALERT</span> <span class="t-dim">— ad spend +180% vs 7-day avg — flagging</span></div>
+<div class="terminal-line"><span class="t-time">09:22:00</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">settling</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ MYbank same-day</span> <span class="t-ok">✓ approved</span></div>
+<!-- block 2 (repeat for seamless loop) -->
+<div class="terminal-line"><span class="t-time">09:14:02</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:03</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:05</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">TikTok Shop US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:07</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">£3,200</span> <span class="t-dim">from</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:08</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">฿48,500</span> <span class="t-dim">from</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:09</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">balance:</span> <span class="t-amount">£3,200</span> · <span class="t-amount">฿48,500</span> · <span class="t-amount">$12,400</span> · <span class="t-amount">¥8,200</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-agent">[ad-agent]</span> <span class="t-dim">scaling</span> <span class="t-platform">Walmart US</span> <span class="t-dim">budget → $2,000/day</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ BLOCKED</span> <span class="t-dim">— card limit $500/day — escalating</span></div>
+<div class="terminal-line"><span class="t-time">09:16:30</span> <span class="t-wf">[worldfirst]</span> <span class="t-fx">FX quote</span> <span class="t-dim">GBP/USD</span> <span class="t-amount">1.2847</span> <span class="t-dim">interbank mid</span></div>
+<div class="terminal-line"><span class="t-time">09:16:31</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">converting</span> <span class="t-amount">£3,200 → $4,111</span> <span class="t-dim">... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:17:44</span> <span class="t-agent">[sourcing-agent]</span> <span class="t-dim">found supplier for SKU-4421 on</span> <span class="t-platform">1688</span></div>
+<div class="terminal-line"><span class="t-time">09:17:45</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">verifying 义乌市恒达贸易有限公司 ...</span> <span class="t-ok">✓ match</span></div>
+<div class="terminal-line"><span class="t-time">09:17:46</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">payment</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ supplier ... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:18:02</span> <span class="t-agent">[pricing-agent]</span> <span class="t-dim">repricing 34 SKUs on</span> <span class="t-platform">Amazon US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:18:15</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">issuing World Card for</span> <span class="t-platform">TikTok Shop</span> <span class="t-dim">ads ... limit $300/day</span></div>
+<div class="terminal-line"><span class="t-time">09:19:01</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">daily spend report:</span> <span class="t-amount">$847.20</span> <span class="t-dim">across 3 cards</span></div>
+<div class="terminal-line"><span class="t-time">09:19:30</span> <span class="t-agent">[inventory-agent]</span> <span class="t-dim">syncing stock →</span> <span class="t-platform">Shopify</span> · <span class="t-platform">Lazada</span> · <span class="t-platform">eBay</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:20:05</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">$1,890</span> <span class="t-dim">from</span> <span class="t-platform">Shopify US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:20:44</span> <span class="t-agent">[ad-agent]</span> <span class="t-dim">ROAS 4.2x on</span> <span class="t-platform">Amazon UK</span> <span class="t-dim">— maintaining budget</span></div>
+<div class="terminal-line"><span class="t-time">09:21:10</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ ALERT</span> <span class="t-dim">— ad spend +180% vs 7-day avg — flagging</span></div>
+<div class="terminal-line"><span class="t-time">09:22:00</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">settling</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ MYbank same-day</span> <span class="t-ok">✓ approved</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 01. WHAT WF DOES FOR YOUR AGENT ======== -->
+<section class="section section-alt" id="ops">
+  <div class="section-inner">
+    <div class="section-label">01 — <span class="en">Financial Operations</span><span class="cn">资金运营</span></div>
+    <h2>
+      <span class="en">WorldFirst powers the money side of your agent stack</span>
+      <span class="cn">万里汇驱动你 Agent 技术栈的资金端</span>
+    </h2>
+    <p class="section-desc">
+      <span class="en">Your agents handle sourcing, listing, pricing, and marketing. WorldFirst handles collection, conversion, spending, and supplier payments — as an MCP server your OpenClaw calls directly.</span>
+      <span class="cn">你的 Agent 负责选品、上架、定价、营销。万里汇负责收款、换汇、消费管理和供应商付款——作为 MCP Server 被你的 OpenClaw 直接调用。</span>
+    </p>
+
+    <div class="ops-grid">
+      <div class="ops-card">
+        <div class="ops-card-title">Collect <span class="ops-card-title-cn">收款</span></div>
+        <div class="ops-card-desc">
+          <span class="en">Auto-collect payouts from Amazon, Shopee, TikTok Shop, Shopify, eBay, Lazada, Mercado Libre, and 130+ platforms into one World Account.</span>
+          <span class="cn">自动归集亚马逊、Shopee、TikTok Shop、Shopify、eBay 等 130+ 平台货款到一个万里汇账户。</span>
+        </div>
+        <div class="ops-card-stat">130+ platforms</div>
+      </div>
+      <div class="ops-card">
+        <div class="ops-card-title">Convert <span class="ops-card-title-cn">换汇</span></div>
+        <div class="ops-card-desc">
+          <span class="en">Convert 20+ currencies at interbank rates. Lock forward contracts to hedge FX risk on large orders. Your agent gets live quotes.</span>
+          <span class="cn">20+币种银行间汇率换汇。大额订单锁定远期合约对冲风险。你的 Agent 获取实时报价。</span>
+        </div>
+        <div class="ops-card-stat">20+ currencies</div>
+      </div>
+      <div class="ops-card">
+        <div class="ops-card-title">Spend <span class="ops-card-title-cn">消费</span></div>
+        <div class="ops-card-desc">
+          <span class="en">World Cards for ad spend, SaaS, platform fees. Issue per-agent or per-campaign cards, each with its own spend limit.</span>
+          <span class="cn">万里汇虚拟卡用于广告、SaaS、平台费。按 Agent 或按活动发卡，各有独立限额。</span>
+        </div>
+        <div class="ops-card-stat">Per-card limits</div>
+      </div>
+      <div class="ops-card">
+        <div class="ops-card-title">Pay Suppliers <span class="ops-card-title-cn">付供应商</span></div>
+        <div class="ops-card-desc">
+          <span class="en">Pay Chinese suppliers in CNY with same-day settlement. Verify against business registration before sending.</span>
+          <span class="cn">人民币付中国供应商，当天到账。付款前验证营业执照。</span>
+        </div>
+        <div class="ops-card-stat">Same-day CNY</div>
+      </div>
+    </div>
+
+    <p class="ops-note">
+      <span class="en">1.5M+ businesses · $200B+ annual volume · FCA regulated (FRN: 900508) · Powered by Ant Group</span>
+      <span class="cn">150万+企业客户 · 年交易额 $2000亿+ · 英国 FCA 监管 (FRN: 900508) · 蚂蚁集团</span>
+    </p>
+  </div>
+</section>
+
+<!-- ======== 02. THE PROBLEM ======== -->
+<section class="section" id="problem">
+  <div class="section-inner">
+    <div class="section-label">02 — <span class="en">The Problem</span><span class="cn">问题</span></div>
+    <h2>
+      <span class="en">AI agents + money = risk</span>
+      <span class="cn">AI Agent + 钱 = 风险</span>
+    </h2>
+
+    <div class="scenario">
+      <span class="en">
+        Your agents are good at selling. <em>Too good, maybe.</em><br><br>
+        One agent scales ad spend to <span class="hl">$5,000/day</span> chasing ROAS. Another sources from a new supplier and pays a <span class="hl">¥80,000 deposit</span>. A third locks an FX forward contract on a hunch. By the time you check your phone on Monday morning, <span class="hl">$30,000 has moved</span> — and you approved none of it.
+      </span>
+      <span class="cn">
+        你的 Agent 很会卖。<em>也许太会了。</em><br><br>
+        一个 Agent 把广告日预算拉到 <span class="hl">$5,000</span> 追 ROAS。另一个找到新供应商，付了 <span class="hl">¥80,000 定金</span>。第三个凭直觉锁了个远期合约。等你周一早上看手机的时候，<span class="hl">$30,000 已经花出去了</span>——你一笔都没批。
+      </span>
+    </div>
+    <p class="scenario-caption">
+      <span class="en">Other agents need capabilities. Your financial agent needs constraints.</span>
+      <span class="cn">其他 Agent 需要能力。你的财务 Agent 需要约束。</span>
+    </p>
+  </div>
+</section>
+
+<!-- ======== 03. YOUR CFO AGENT ======== -->
+<section class="section section-alt" id="cfo">
+  <div class="section-inner">
+    <div class="section-label">03 — <span class="en">Your CFO Agent</span><span class="cn">你的 CFO Agent</span></div>
+    <h2>
+      <span class="en">WorldFirst: the one agent you trust with the money</span>
+      <span class="cn">万里汇：唯一你信得过管钱的 Agent</span>
+    </h2>
+    <p class="section-desc">
+      <span class="en">Multiple agents, multiple platforms, multiple currencies — one WorldFirst agent controls it all. The CFO that never sleeps.</span>
+      <span class="cn">多个 Agent、多个平台、多种货币——一个万里汇 Agent 统管一切。永不下线的 CFO。</span>
+    </p>
+
+    <div class="pillar-grid">
+      <div class="pillar">
+        <h3>Spend Boundaries <span class="cn-sub">支出边界</span></h3>
+        <p>
+          <span class="en">Set daily, weekly, or per-platform spend limits. Your agents operate freely within the boundary. The moment they try to exceed it, WorldFirst stops the transaction and asks you.</span>
+          <span class="cn">设置每日、每周或按平台的支出限额。你的 Agent 在边界内自由运行。一旦超限，万里汇立刻拦截并通知你。</span>
+        </p>
+      </div>
+      <div class="pillar">
+        <h3>Virtual Card Per Agent <span class="cn-sub">每个 Agent 一张卡</span></h3>
+        <p>
+          <span class="en">Each agent gets its own World Card with its own ceiling. Ad agent: $500/day. Sourcing agent: $10,000/month. The card itself enforces the limit — no overspend possible.</span>
+          <span class="cn">每个 Agent 有自己的万里汇虚拟卡和专属额度。广告 Agent：$500/天。选品 Agent：$10,000/月。卡本身就是限额——超支不可能发生。</span>
+        </p>
+      </div>
+      <div class="pillar">
+        <h3>Anomaly Detection <span class="cn-sub">异常检测</span></h3>
+        <p>
+          <span class="en">Unusual spend patterns, unexpected large transactions, sudden balance drops — WorldFirst flags them before damage is done. At 3am, your agents aren't spending blindly. WorldFirst is watching.</span>
+          <span class="cn">异常消费模式、意外大额交易、余额骤降——万里汇在造成损失前预警。凌晨3点，你的 Agent 不会盲目花钱。万里汇在盯着。</span>
+        </p>
+      </div>
+      <div class="pillar">
+        <h3>Human Approval Gates <span class="cn-sub">人工审批节点</span></h3>
+        <p>
+          <span class="en">Read-only operations are automatic. But anything that moves real money — payments, FX locks, new suppliers, new cards — needs your explicit OK. Agents propose, you approve.</span>
+          <span class="cn">只读操作自动执行。但任何涉及真金白银的操作——付款、锁汇、添加供应商、发卡——都需要你明确批准。Agent 建议，你拍板。</span>
+        </p>
+      </div>
+      <div class="pillar wide">
+        <h3>Centralized Financial Hub <span class="cn-sub">集中式资金中枢</span></h3>
+        <p>
+          <span class="en">Run 5 agents across 5 platforms. All financial activity flows through one WorldFirst account. Every dollar in, every dollar out, every conversion, every payment — one dashboard, one audit trail, one source of truth. In a world where operations are going agentic, WorldFirst is the bedrock that keeps your money safe.</span>
+          <span class="cn">5个 Agent 跑5个平台。所有资金操作都经过一个万里汇账户。每一笔收入、支出、换汇、付款——一个仪表盘、一条审计链、一个真实数据源。在运营越来越 Agent 化的时代，万里汇是守住你的钱的基石。</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 04. SEE IT IN ACTION ======== -->
+<section class="section" id="action">
+  <div class="section-inner">
+    <div class="section-label">04 — <span class="en">See It In Action</span><span class="cn">实战演示</span></div>
+    <h2>
+      <span class="en">Your CFO agent catches what others miss</span>
+      <span class="cn">你的 CFO Agent 能抓住别人遗漏的问题</span>
+    </h2>
+
+    <div class="conversation" style="margin-bottom: 20px;">
+      <div class="conv-header"><span class="dot"></span>
+        <span class="en">Runaway ad spend</span><span class="cn">广告支出失控</span>
+      </div>
+      <div class="conv-body">
+        <div class="conv-msg">
+          <div class="conv-sender agent">AD AGENT</div>
+          <div class="conv-text">
+            <span class="en">ROAS on UK campaign is 4.2x. Scaling daily budget from $200 to $2,000.</span>
+            <span class="cn">英国站广告 ROAS 达到 4.2x。正在将日预算从 $200 提升到 $2,000。</span>
+          </div>
+        </div>
+        <div class="conv-msg">
+          <div class="conv-sender wf">WORLDFIRST</div>
+          <div class="conv-text">
+            <span class="en"><strong>Blocked.</strong> Daily card limit for ad agent is <code>$500</code>. Requested <code>$2,000</code> exceeds limit by 300%.<br>Current card balance: <code>$312.40 remaining today</code>. Escalating to you.</span>
+            <span class="cn"><strong>已拦截。</strong>广告 Agent 日消费限额为 <code>$500</code>。请求的 <code>$2,000</code> 超限 300%。<br>今日卡余额：<code>剩余 $312.40</code>。已上报。</span>
+            <div class="blocked"><span class="en">BLOCKED — Awaiting your approval to raise limit</span><span class="cn">已拦截 — 等待你批准提升限额</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conversation" style="margin-bottom: 20px;">
+      <div class="conv-header"><span class="dot"></span>
+        <span class="en">Unverified supplier</span><span class="cn">未验证供应商</span>
+      </div>
+      <div class="conv-body">
+        <div class="conv-msg">
+          <div class="conv-sender agent">SOURCING AGENT</div>
+          <div class="conv-text">
+            <span class="en">Found cheaper supplier for SKU-4421. Sending ¥80,000 deposit to 广州市新达贸易有限公司.</span>
+            <span class="cn">找到 SKU-4421 更便宜的供应商。正在向广州市新达贸易有限公司付 ¥80,000 定金。</span>
+          </div>
+        </div>
+        <div class="conv-msg">
+          <div class="conv-sender wf">WORLDFIRST</div>
+          <div class="conv-text">
+            <span class="en"><strong>Blocked.</strong> Supplier not in verified list. Running verification...<br><strong>Mismatch found.</strong> Bank account holder ≠ registered business name.<br>Registered: 广州市新达贸易有限公司<br>Bank account: 广州新达电子商务有限公司</span>
+            <span class="cn"><strong>已拦截。</strong>供应商不在已验证列表。正在验证...<br><strong>发现不匹配。</strong>银行账户持有人 ≠ 营业执照名称。<br>营业执照：广州市新达贸易有限公司<br>银行账户：广州新达电子商务有限公司</span>
+            <div class="blocked"><span class="en">BLOCKED — Beneficiary verification failed</span><span class="cn">已拦截 — 收款方验证未通过</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="conversation">
+      <div class="conv-header"><span class="dot"></span>
+        <span class="en">Smart FX, with your permission</span><span class="cn">智能换汇，需你许可</span>
+      </div>
+      <div class="conv-body">
+        <div class="conv-msg">
+          <div class="conv-sender agent">FX AGENT</div>
+          <div class="conv-text">
+            <span class="en">GBP/CNY dropped 1.2% in 4 hours. Recommending locking ¥200,000 forward for next month's supplier payments.</span>
+            <span class="cn">GBP/CNY 4小时内跌了 1.2%。建议锁定 ¥200,000 远期合约用于下月供应商付款。</span>
+          </div>
+        </div>
+        <div class="conv-msg">
+          <div class="conv-sender wf">WORLDFIRST</div>
+          <div class="conv-text">
+            <span class="en">Quote: <code>GBP/CNY 9.1847</code> — valid 60s<br>Value: <code>¥200,000</code> ≈ £21,775<br>Exceeds weekly FX threshold of <code>£10,000</code>. Your call.</span>
+            <span class="cn">报价：<code>GBP/CNY 9.1847</code> — 60秒有效<br>金额：<code>¥200,000</code> ≈ £21,775<br>超出每周换汇阈值 <code>£10,000</code>。你来决定。</span>
+            <div class="waiting"><span class="en">WAITING — Exceeds threshold. Your approval needed.</span><span class="cn">等待中 — 超出阈值。需要你批准。</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== 05. INTEGRATION ======== -->
+<section class="section section-alt" id="integration">
+  <div class="section-inner">
+    <div class="section-label">05 — <span class="en">Integration</span><span class="cn">接入</span></div>
+    <h2>
+      <span class="en">Add your CFO to the team</span>
+      <span class="cn">把 CFO 加入你的团队</span>
+    </h2>
+
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dots"><span></span><span></span><span></span></div>
+        <span>~/.openclaw/openclaw.json</span>
+      </div>
+      <pre>{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"worldfirst"</span>: {
+      <span class="key">"command"</span>: <span class="string">"npx"</span>,
+      <span class="key">"args"</span>: [<span class="string">"worldfirst-mcp-server"</span>],
+      <span class="key">"env"</span>: {
+        <span class="key">"WORLDFIRST_CLIENT_ID"</span>: <span class="string">"${WORLDFIRST_CLIENT_ID}"</span>,
+        <span class="key">"WORLDFIRST_PRIVATE_KEY_PATH"</span>: <span class="string">"~/.keys/worldfirst.pem"</span>
+      }
+    }
+  }
+}</pre>
+    </div>
+
+    <h3 style="font-size: 17px; font-weight: 600; margin: 40px 0 20px;">
+      <span class="en">Permission tiers</span><span class="cn">权限分层</span>
+    </h3>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="tier-label auto">AUTOMATIC</div>
+        <div class="tier-sublabel">自动执行</div>
+        <div class="tier-tools">check_balance<br>get_statement<br>list_beneficiaries<br>check_payment_status<br>verify_supplier<br>list_world_cards<br>get_spend_alerts<br>get_fx_rate<br>get_fx_quote</div>
+      </div>
+      <div class="tier">
+        <div class="tier-label monitor">AUTO-PROTECT</div>
+        <div class="tier-sublabel">自动防护</div>
+        <div class="tier-tools">freeze_card<br><span style="font-size:11px;color:var(--wf-text-muted)"><span class="en">Freezes card instantly on anomaly</span><span class="cn">异常时自动冻结卡片</span></span></div>
+      </div>
+      <div class="tier">
+        <div class="tier-label gate">HUMAN GATE</div>
+        <div class="tier-sublabel">需人工批准</div>
+        <div class="tier-tools">create_payment<br>lock_fx_rate<br>add_beneficiary<br>issue_world_card<br>set_spend_limit</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px;color:var(--wf-text-light);margin-top:28px;line-height:1.7;">
+      <span class="en">RSA2-SHA256 signed requests. Keys never leave your machine. Open source. Sandbox mode for testing.</span>
+      <span class="cn">RSA2-SHA256 签名。私钥不离机。全部开源。沙箱模式可测试。</span>
+    </p>
+  </div>
+</section>
+
+<!-- ======== 06. MODELS + DEPLOY ======== -->
+<section class="section" id="deploy">
+  <div class="section-inner">
+    <div class="section-label">06 — <span class="en">Compatibility & Deployment</span><span class="cn">兼容与部署</span></div>
+    <h2><span class="en">Works with your stack</span><span class="cn">兼容你的技术栈</span></h2>
+
+    <div class="compact-grid">
+      <div class="compact-section">
+        <h3><span class="en">Models</span><span class="cn">模型</span></h3>
+        <ul class="model-list">
+          <li><div><span class="model-name-inline">Qwen 2.5</span> <span class="model-provider-inline">通义千问</span></div><span class="ecosystem-tag">Ant / Alibaba</span></li>
+          <li><div><span class="model-name-inline">DeepSeek V3</span> <span class="model-provider-inline">深度求索</span></div></li>
+          <li><div><span class="model-name-inline">Kimi</span> <span class="model-provider-inline">月之暗面</span></div></li>
+          <li><div><span class="model-name-inline">MiniMax</span> <span class="model-provider-inline">MiniMax</span></div></li>
+          <li><div><span class="model-name-inline">Claude</span> <span class="model-provider-inline">Anthropic</span></div></li>
+          <li><div><span class="model-name-inline">GPT-4o</span> <span class="model-provider-inline">OpenAI</span></div></li>
+        </ul>
+      </div>
+      <div class="compact-section">
+        <h3><span class="en">Deploy</span><span class="cn">部署</span></h3>
+        <div class="code-block" style="margin-top:0;">
+          <div class="code-header"><div class="code-dots"><span></span><span></span><span></span></div><span>terminal</span></div>
+          <pre><span class="comment"># Local</span>
+npx worldfirst-mcp-server
+
+<span class="comment"># Docker</span>
+docker run -d \
+  -e <span class="key">WORLDFIRST_CLIENT_ID</span>=<span class="string">id</span> \
+  -v ~/.keys:/keys:ro \
+  worldfirst/mcp-server:latest
+
+<span class="comment"># Runtimes 兼容运行时</span>
+OpenClaw · QClaw · KimiClaw
+ArkClaw · EasyClaw · Claude Code</pre>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:56px;">
+      <a href="https://github.com/socialworldfirst/worldfirst-mcp-server" class="btn btn-primary btn-lg" target="_blank">View on GitHub</a>
+      <a href="https://portal.worldfirst.com/register?region=GB&lang=en-GB" class="btn btn-outline btn-lg" style="margin-left:12px;" target="_blank">
+        <span class="en">Open a World Account</span><span class="cn">开通万里汇账户</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ======== FOOTER ======== -->
+<footer class="wf-footer">
+  <div class="wf-footer-inner">
+    <div class="wf-footer-grid">
+      <div class="wf-footer-col"><h3>Product</h3><ul>
+        <li><a href="https://www.worldfirst.com/uk/product/" target="_blank">World Account</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/pay/" target="_blank">Pay</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/collect/" target="_blank">Receive</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/fx/" target="_blank">FX</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/pay/pay-chinese-suppliers/" target="_blank">Pay to China</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/pay/world-card/" target="_blank">World Card</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/collect/get-paid-by-marketplaces/" target="_blank">Marketplace Collection</a></li>
+      </ul></div>
+      <div class="wf-footer-col"><h3>Solutions</h3><ul>
+        <li><a href="https://www.worldfirst.com/uk/solution/ecommerce-seller-solution/" target="_blank">E-commerce Seller</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/pay/pay-business-partners/" target="_blank">Corporate Payment</a></li>
+        <li><a href="https://www.worldfirst.com/uk/product/pay/pay-chinese-suppliers/" target="_blank">Pay to China</a></li>
+      </ul><h3 style="margin-top:28px;">Resources</h3><ul>
+        <li><a href="https://www.worldfirst.com/uk/blogs/" target="_blank">Blog</a></li>
+        <li><a href="https://www.worldfirst.com/uk/help-center/" target="_blank">User Guides</a></li>
+        <li><a href="https://www.worldfirst.com/uk/help-center/faqs/" target="_blank">FAQs</a></li>
+      </ul></div>
+      <div class="wf-footer-col"><h3>Security</h3><ul>
+        <li><a href="https://www.worldfirst.com/uk/legal/" target="_blank">Legal</a></li>
+        <li><a href="https://www.worldfirst.com/uk/compliance/" target="_blank">Compliance</a></li>
+        <li><a href="https://www.worldfirst.com/uk/privacy-policy/" target="_blank">Privacy Policy</a></li>
+        <li><a href="https://www.worldfirst.com/uk/cookie-policy/" target="_blank">Cookie Policy</a></li>
+      </ul></div>
+      <div class="wf-footer-col"><h3>Company</h3><ul>
+        <li><a href="https://www.worldfirst.com/uk/about-worldfirst/" target="_blank">About WorldFirst</a></li>
+        <li><a href="https://www.worldfirst.com/uk/why-choose-worldfirst/" target="_blank">Why WorldFirst</a></li>
+        <li><a href="https://www.worldfirst.com/uk/help-support/contact-us/" target="_blank">Contact Us</a></li>
+        <li><a href="https://www.worldfirst.com/uk/partners/" target="_blank">Partner with Us</a></li>
+      </ul></div>
+      <div class="wf-footer-col"><h3>MCP Server</h3><ul>
+        <li><a href="https://github.com/socialworldfirst/worldfirst-mcp-server" target="_blank">GitHub</a></li>
+        <li><a href="https://developers.worldfirst.com" target="_blank">API Docs</a></li>
+        <li><a href="https://developers.worldfirst.com" target="_blank">Sandbox</a></li>
+      </ul></div>
+    </div>
+    <div class="wf-footer-middle">
+      <div class="wf-footer-social">
+        <span>Follow Us</span>
+        <a href="https://www.linkedin.com/company/worldfirst/" target="_blank">in</a>
+        <a href="https://www.youtube.com/@worldfirst" target="_blank">&#9654;</a>
+        <a href="https://www.facebook.com/worldfirstfx" target="_blank">f</a>
+        <a href="https://www.instagram.com/worldfirst/" target="_blank">&#9673;</a>
+        <a href="https://x.com/WorldFirstLtd" target="_blank">&#120143;</a>
+      </div>
+    </div>
+    <div class="wf-footer-legal">
+      <span class="en">World First UK Limited is a UK registered limited company with company number 05022388 and is authorised by the Financial Conduct Authority ("FCA") as an Electronic Money Institution under the Electronic Money Regulations 2011 with FCA Firm Reference number 900508. The registered address for World First UK Limited is 2nd Floor, International House, 1 St Katharine's Way, London, E1W 1UN.</span>
+      <span class="cn">World First UK Limited 是一家在英国注册的有限公司，公司编号 05022388，已获得英国金融行为监管局（"FCA"）授权，根据2011年电子货币条例注册为电子货币机构，FCA 参考编号 900508。</span>
+    </div>
+    <div class="wf-footer-copyright">&copy; 2026, Ant International or its affiliates</div>
+  </div>
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.querySelectorAll('.lang-toggle button').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === (lang === 'en' ? 'EN' : '中文'));
+    });
+    localStorage.setItem('wf-mcp-lang', lang);
+  }
+  const saved = localStorage.getItem('wf-mcp-lang');
+  if (saved) setLang(saved);
+</script>
+
+</body>
+</html>
