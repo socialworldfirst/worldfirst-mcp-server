@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenClaw × 万里汇 — 实战闭门会</title>
+  <meta name="description" content="Half-day build session in Shenzhen. AI agent operators + WorldFirst API engineers. Let's figure out the future of e-commerce payments.">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --wf-red: #FF0051;
+      --wf-red-dark: #e0004a;
+      --wf-dark: #1F2323;
+      --wf-text: #484F56;
+      --wf-text-light: #6B7280;
+      --wf-text-muted: #9CA3AF;
+      --wf-bg: #FFFFFF;
+      --wf-bg-alt: #F7F8FA;
+      --wf-border: #E5E7EB;
+      --wf-code-bg: #0a0b0f;
+      --wf-teal: #00C9B7;
+      --wf-blue: #4d9fff;
+      --wf-green: #52c41a;
+      --wf-yellow: #faad14;
+      --wf-orange: #fa8c16;
+      --font: 'Poppins', sans-serif;
+      --font-cn: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font); color: var(--wf-dark); background: var(--wf-bg); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    [data-lang="en"] .cn { display: none; }
+    [data-lang="cn"] .en { display: none; }
+
+    /* ---- NAV ---- */
+    .wf-nav { position: sticky; top: 0; z-index: 100; background: #08090d; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .wf-nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .wf-nav-left { display: flex; align-items: center; gap: 32px; }
+    .wf-nav-brand { font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: #fff; text-decoration: none; letter-spacing: -0.02em; }
+    .wf-nav-brand .x { color: var(--wf-red); padding: 0 4px; }
+    .wf-nav-brand .cn-brand { font-family: var(--font-cn); }
+    .nav-tabs { display: flex; gap: 0; list-style: none; }
+    .nav-tabs a { display: block; padding: 16px 20px; text-decoration: none; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.4); border-bottom: 2px solid transparent; transition: all 0.2s; }
+    .nav-tabs a:hover { color: rgba(255,255,255,0.7); }
+    .nav-tabs a.active { color: #fff; border-bottom-color: var(--wf-red); }
+    .wf-nav-right { display: flex; align-items: center; gap: 12px; }
+
+    /* ---- HERO (dark) ---- */
+    .hero {
+      background: #08090d;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 0, 81, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px;
+      left: -60px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(0, 201, 183, 0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 32px 40px;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 36px;
+      align-items: center;
+      position: relative;
+    }
+    .hero-left { color: #fff; }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow span { color: var(--wf-red); }
+    .hero h1 {
+      font-size: clamp(28px, 3.5vw, 38px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .hero h1 .cn-title { font-family: var(--font-cn); }
+    .hero-sub {
+      font-size: 15px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      max-width: 420px;
+    }
+    .hero-sub .cn { font-family: var(--font-cn); }
+    .hero-buttons { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 28px; border-radius: 50px; font-family: var(--font); font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-primary { background: var(--wf-red); color: #fff; }
+    .btn-primary:hover { background: var(--wf-red-dark); box-shadow: 0 4px 12px rgba(255, 0, 81, 0.25); }
+    .btn-ghost { background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.12); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.12); }
+    .lang-toggle { display: flex; border: 1px solid rgba(255,255,255,0.15); border-radius: 50px; overflow: hidden; font-size: 12px; margin-left: 8px; }
+    .lang-toggle button { background: none; border: none; color: rgba(255,255,255,0.4); padding: 5px 12px; cursor: pointer; font-family: var(--font); font-size: 12px; font-weight: 500; transition: all 0.2s; }
+    .lang-toggle button.active { background: var(--wf-red); color: #fff; }
+
+    /* ---- SCROLLING TERMINAL ---- */
+    .terminal {
+      background: #0d0e14;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+    .terminal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .terminal-dots { display: flex; gap: 6px; }
+    .terminal-dots span { width: 9px; height: 9px; border-radius: 50%; }
+    .terminal-dots span:nth-child(1) { background: #ff5f57; }
+    .terminal-dots span:nth-child(2) { background: #ffbd2e; }
+    .terminal-dots span:nth-child(3) { background: #28ca41; }
+    .terminal-title { color: rgba(255,255,255,0.2); font-size: 10px; }
+    .terminal-body {
+      padding: 12px 14px;
+      height: 260px;
+      overflow: hidden;
+      position: relative;
+    }
+    .terminal-scroll { animation: scroll-up 28s linear infinite; }
+    @keyframes scroll-up {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+    .terminal-line { white-space: nowrap; }
+    .t-time { color: rgba(255,255,255,0.12); }
+    .t-agent { color: var(--wf-blue); }
+    .t-wf { color: var(--wf-red); font-weight: 500; }
+    .t-platform { color: var(--wf-yellow); font-weight: 500; }
+    .t-ok { color: var(--wf-green); }
+    .t-warn { color: var(--wf-red); }
+    .t-amount { color: var(--wf-teal); }
+    .t-fx { color: #8250df; }
+    .t-dim { color: rgba(255,255,255,0.25); }
+    .terminal-body::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50px;
+      background: linear-gradient(transparent, #0d0e14);
+      pointer-events: none;
+    }
+    .terminal-body::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 16px;
+      background: linear-gradient(#0d0e14, transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ---- SECTIONS (light) ---- */
+    .section { padding: 48px 32px; }
+    .section-alt { background: var(--wf-bg-alt); }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--wf-red);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .section h2 {
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--wf-dark);
+      margin-bottom: 8px;
+    }
+    .section h2 .cn { font-family: var(--font-cn); }
+    .section-desc {
+      font-size: 15px;
+      color: var(--wf-text);
+      max-width: 620px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+    .section-desc .cn { font-family: var(--font-cn); }
+
+    /* ---- FLOW DIAGRAM (light) ---- */
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 20px 0;
+    }
+    .flow-box {
+      padding: 14px 24px;
+      border: 1px solid var(--wf-border);
+      border-radius: 10px;
+      text-align: center;
+      min-width: 160px;
+      background: #fff;
+    }
+    .flow-box .title { font-weight: 600; color: var(--wf-dark); margin-bottom: 2px; font-size: 13px; }
+    .flow-box .sub { font-size: 10px; color: var(--wf-text-muted); }
+    .flow-box.broken { border-color: var(--wf-red); background: rgba(255,0,81,0.03); }
+    .flow-box.broken .title { color: var(--wf-red); }
+    .flow-box.ok { border-color: var(--wf-teal); background: rgba(0,201,183,0.04); }
+    .flow-box.ok .title { color: #00a89a; }
+    .flow-arrow { color: var(--wf-text-muted); font-size: 18px; padding: 0 12px; }
+
+    /* ---- TWO-COL CARDS ---- */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 0;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+    .section-alt .card { background: #fff; }
+    .card:hover { border-color: #ccc; }
+    .card h3 { font-size: 15px; font-weight: 600; color: var(--wf-dark); margin-bottom: 12px; }
+    .card h3 .cn-sub { font-family: var(--font-cn); font-size: 12px; color: var(--wf-text-muted); font-weight: 400; margin-left: 6px; }
+    .card p { font-size: 14px; color: var(--wf-text); line-height: 1.6; }
+    .card p .cn { font-family: var(--font-cn); }
+    .checklist { list-style: none; }
+    .checklist li {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--wf-text);
+      padding: 4px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+    .checklist li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--wf-teal);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .kv-block {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 2;
+      margin-top: 12px;
+    }
+    .kv-block .k { color: var(--wf-teal); display: inline-block; min-width: 85px; }
+    .kv-block .v { color: var(--wf-text); }
+
+    /* ---- PHASES ---- */
+    .phases {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    .phase-card {
+      background: #fff;
+      border: 1px solid var(--wf-border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+    .phase-card:hover { border-color: #ccc; }
+    .phase-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--wf-red);
+      color: var(--wf-red);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .phase-card h3 { font-size: 16px; font-weight: 600; color: var(--wf-dark); margin-bottom: 2px; }
+    .phase-card .dur { font-family: var(--font-mono); font-size: 11px; color: var(--wf-text-muted); margin-bottom: 8px; }
+    .phase-card p { font-size: 13px; line-height: 1.55; color: var(--wf-text); }
+    .phase-card p .cn { font-family: var(--font-cn); }
+
+    /* ---- FOOTER ---- */
+    .footer {
+      background: var(--wf-dark);
+      color: #fff;
+      padding: 36px 32px;
+    }
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+    .footer-logistics { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .footer-logistics strong { color: #fff; font-weight: 600; }
+    .qr-placeholder {
+      width: 96px;
+      height: 96px;
+      border: 2px dashed rgba(255,255,255,0.15);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      font-family: var(--font-mono);
+      gap: 3px;
+      transition: border-color 0.2s;
+    }
+    .qr-placeholder:hover { border-color: var(--wf-red); }
+    .qr-placeholder .zh-label { font-family: var(--font-cn); font-size: 11px; }
+    .footer-brand { text-align: right; }
+    .footer-brand .collab {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .footer-brand .collab .x { color: var(--wf-red); padding: 0 5px; }
+    .footer-brand .tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+    }
+    .footer-brand .tagline .cn { font-family: var(--font-cn); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .terminal { display: none; }
+      .two-col { grid-template-columns: 1fr; }
+      .phases { grid-template-columns: 1fr; }
+      .flow-diagram { flex-wrap: wrap; gap: 6px; }
+      .flow-box { min-width: 120px; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; }
+      .footer-brand { text-align: center; }
+      .qr-placeholder { margin: 0 auto; }
+      .nav-tabs { display: none; }
+    }
+    @media (max-width: 600px) {
+      .section { padding: 36px 20px; }
+      .hero-grid { padding: 32px 20px; }
+      .footer { padding: 28px 20px; }
+    }
+
+    /* ---- PRINT ---- */
+    @media print {
+      .hero { background: #f0f0f4; }
+      .hero h1, .hero-eyebrow, .hero-sub { color: #1a1a1a !important; }
+      .hero-eyebrow span { color: var(--wf-red); }
+      .terminal { display: none; }
+      .hero-buttons { display: none; }
+      .footer { background: #f0f0f4; }
+      .footer-logistics, .footer-brand .collab, .footer-brand .tagline { color: #1a1a1a !important; }
+      @page { margin: 1.5cm; size: A4; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======== NAV ======== -->
+<nav class="wf-nav">
+  <div class="wf-nav-inner">
+    <div class="wf-nav-left">
+      <span class="wf-nav-brand">OpenClaw<span class="x">×</span><span class="cn-brand">万里汇</span></span>
+      <ul class="nav-tabs">
+        <li><a href="index.html">API</a></li>
+        <li><a href="openclaw.html">OpenClaw</a></li>
+        <li><a href="workshop.html" class="active"><span class="en">Workshop</span><span class="cn">实战闭门会</span></a></li>
+      </ul>
+    </div>
+    <div class="wf-nav-right">
+      <div class="lang-toggle">
+        <button class="active" onclick="setLang('en')">EN</button>
+        <button onclick="setLang('cn')">中文</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== HERO ======== -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span>$</span> openclaw <span>×</span> worldfirst <span>—</span> build_workshop</div>
+      <h1>
+        <span class="en">OpenClaw <span style="color:rgba(255,255,255,0.25)">×</span> WorldFirst<br><span style="font-size:0.7em; font-weight:400; color:rgba(255,255,255,0.6);">Agentic Commerce Build Workshop</span></span>
+        <span class="cn"><span class="cn-title">openclaw × 万里汇<br>实战闭门会</span></span>
+      </h1>
+      <p class="hero-sub">
+        <span class="en">Your agents handle sourcing, listing, pricing, fulfillment. The payment layer? Still manual. Still the bottleneck. Let's fix that — together.</span>
+        <span class="cn">选品、上架、定价、发货——你的 Agents 全包了。<br>但到了收钱付钱这一步，怎么还得人工盯？<br>这不是你的问题，是工具没跟上。我们来一起补上这块拼图。</span>
+      </p>
+      <div class="hero-buttons">
+        <a href="#apply" class="btn btn-primary">
+          <span class="en">Apply to Join</span>
+          <span class="cn">申请入场</span>
+        </a>
+        <a href="#format" class="btn btn-ghost">
+          <span class="en">See Format ↓</span>
+          <span class="cn">查看流程 ↓</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- SCROLLING TERMINAL -->
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dots"><span></span><span></span><span></span></div>
+        <div class="terminal-title">agent-stack — running</div>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-scroll">
+<div class="terminal-line"><span class="t-time">09:14:02</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:03</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:05</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">TikTok Shop US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:07</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">£3,200</span> <span class="t-dim">from</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:08</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">฿48,500</span> <span class="t-dim">from</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:09</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">balance:</span> <span class="t-amount">£3,200</span> · <span class="t-amount">฿48,500</span> · <span class="t-amount">$12,400</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-agent">[ad-agent]</span> <span class="t-dim">scaling</span> <span class="t-platform">Walmart US</span> <span class="t-dim">budget → $2,000/day</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ BLOCKED</span> <span class="t-dim">— card limit $500/day — escalating</span></div>
+<div class="terminal-line"><span class="t-time">09:16:30</span> <span class="t-wf">[worldfirst]</span> <span class="t-fx">FX quote</span> <span class="t-dim">GBP/USD</span> <span class="t-amount">1.2847</span></div>
+<div class="terminal-line"><span class="t-time">09:16:31</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">converting</span> <span class="t-amount">£3,200 → $4,111</span> <span class="t-dim">... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:17:44</span> <span class="t-agent">[sourcing-agent]</span> <span class="t-dim">found supplier on</span> <span class="t-platform">1688</span></div>
+<div class="terminal-line"><span class="t-time">09:17:45</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">verifying 深圳市恒达贸易有限公司 ...</span> <span class="t-ok">✓ match</span></div>
+<div class="terminal-line"><span class="t-time">09:17:46</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">payment</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ supplier ... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:18:02</span> <span class="t-agent">[pricing-agent]</span> <span class="t-dim">repricing 34 SKUs on</span> <span class="t-platform">Amazon US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:19:30</span> <span class="t-agent">[inventory-agent]</span> <span class="t-dim">syncing →</span> <span class="t-platform">Shopify</span> · <span class="t-platform">Lazada</span> · <span class="t-platform">eBay</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:20:05</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">$1,890</span> <span class="t-dim">from</span> <span class="t-platform">Shopify US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:21:10</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ ALERT</span> <span class="t-dim">— ad spend +180% vs 7-day avg</span></div>
+<div class="terminal-line"><span class="t-time">09:22:00</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">settling</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ MYbank same-day</span> <span class="t-ok">✓ approved</span></div>
+<!-- repeat for seamless loop -->
+<div class="terminal-line"><span class="t-time">09:14:02</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:03</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:05</span> <span class="t-agent">[listing-agent]</span> <span class="t-dim">pushing SKU-7821 →</span> <span class="t-platform">TikTok Shop US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:07</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">£3,200</span> <span class="t-dim">from</span> <span class="t-platform">Amazon UK</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:08</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">฿48,500</span> <span class="t-dim">from</span> <span class="t-platform">Shopee TH</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:14:09</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">balance:</span> <span class="t-amount">£3,200</span> · <span class="t-amount">฿48,500</span> · <span class="t-amount">$12,400</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-agent">[ad-agent]</span> <span class="t-dim">scaling</span> <span class="t-platform">Walmart US</span> <span class="t-dim">budget → $2,000/day</span></div>
+<div class="terminal-line"><span class="t-time">09:15:12</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ BLOCKED</span> <span class="t-dim">— card limit $500/day — escalating</span></div>
+<div class="terminal-line"><span class="t-time">09:16:30</span> <span class="t-wf">[worldfirst]</span> <span class="t-fx">FX quote</span> <span class="t-dim">GBP/USD</span> <span class="t-amount">1.2847</span></div>
+<div class="terminal-line"><span class="t-time">09:16:31</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">converting</span> <span class="t-amount">£3,200 → $4,111</span> <span class="t-dim">... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:17:44</span> <span class="t-agent">[sourcing-agent]</span> <span class="t-dim">found supplier on</span> <span class="t-platform">1688</span></div>
+<div class="terminal-line"><span class="t-time">09:17:45</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">verifying 深圳市恒达贸易有限公司 ...</span> <span class="t-ok">✓ match</span></div>
+<div class="terminal-line"><span class="t-time">09:17:46</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">payment</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ supplier ... awaiting approval</span></div>
+<div class="terminal-line"><span class="t-time">09:18:02</span> <span class="t-agent">[pricing-agent]</span> <span class="t-dim">repricing 34 SKUs on</span> <span class="t-platform">Amazon US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:19:30</span> <span class="t-agent">[inventory-agent]</span> <span class="t-dim">syncing →</span> <span class="t-platform">Shopify</span> · <span class="t-platform">Lazada</span> · <span class="t-platform">eBay</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:20:05</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">collecting</span> <span class="t-amount">$1,890</span> <span class="t-dim">from</span> <span class="t-platform">Shopify US</span> <span class="t-ok">✓</span></div>
+<div class="terminal-line"><span class="t-time">09:21:10</span> <span class="t-wf">[worldfirst]</span> <span class="t-warn">⚠ ALERT</span> <span class="t-dim">— ad spend +180% vs 7-day avg</span></div>
+<div class="terminal-line"><span class="t-time">09:22:00</span> <span class="t-wf">[worldfirst]</span> <span class="t-dim">settling</span> <span class="t-amount">¥45,000</span> <span class="t-dim">→ MYbank same-day</span> <span class="t-ok">✓ approved</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== THE GAP ======== -->
+<section class="section" id="problem">
+  <div class="section-inner">
+    <div class="section-label">01 — <span class="en">The Gap</span><span class="cn">那个缺口</span></div>
+    <h2>
+      <span class="en">Your automation stack has a hole in it</span>
+      <span class="cn">你的自动化流水线，在支付这儿断了</span>
+    </h2>
+    <p class="section-desc">
+      <span class="en">Agents handle everything from sourcing to fulfillment. But the payment layer — FX conversion, supplier payments, compliance — is still manual. No API. No webhook. No sandbox. We want to fix that, and we need your help to understand exactly what's missing.</span>
+      <span class="cn">从选品到发货，Agents 跑得很顺。但一涉及到钱——换汇、跨境打款、合规审查——系统就哑火了。没 API 能接，没 Webhook 能监，连 Sandbox 都不给试。我们想拆掉它，但得先听听：你卡在哪儿了？</span>
+    </p>
+    <div class="flow-diagram">
+      <div class="flow-box ok">
+        <div class="title">Agent Stack</div>
+        <div class="sub"><span class="en">automated</span><span class="cn">Agent 层：已自动化</span></div>
+      </div>
+      <div class="flow-arrow">──→</div>
+      <div class="flow-box broken">
+        <div class="title">? ? ?</div>
+        <div class="sub">no API · no webhook</div>
+      </div>
+      <div class="flow-arrow">──→</div>
+      <div class="flow-box">
+        <div class="title">Supplier Payment</div>
+        <div class="sub"><span class="en">manual</span><span class="cn">支付层：仍手动</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== WHAT & WHO ======== -->
+<section class="section section-alt" id="format">
+  <div class="section-inner">
+    <div class="section-label">02 — <span class="en">The Workshop</span><span class="cn">实战营</span></div>
+    <h2>
+      <span class="en">Half-day build session. Not a panel. Not a pitch.</span>
+      <span class="cn">半天，只写代码，不画饼</span>
+    </h2>
+    <p class="section-desc">
+      <span class="en">WorldFirst's API engineers + operators who are already running agentic commerce. In the same room. Laptops open, code running, real integration attempts. Every error message is data.</span>
+      <span class="cn">WorldFirst 的 API 工程师，加上已经跑通 Agent 电商的实战派。关起门来，电脑全开，现场接 API。报错？报错就对了——每一个 Error 都是我们要的数据。</span>
+    </p>
+
+    <div class="two-col">
+      <div class="card">
+        <h3><span class="en">Who Should Come</span><span class="cn">谁该来</span></h3>
+        <ul class="checklist">
+          <li><span class="en">Running AI-automated e-commerce workflows <em>in production</em></span><span class="cn">生产环境跑着 AI 自动化流程（不只是 Demo）</span></li>
+          <li><span class="en">Using OpenClaw, Dify, Coze, n8n, or custom LLM agent stack</span><span class="cn">栈里有 OpenClaw、Dify、Coze、n8n，或自研 LLM Agent</span></li>
+          <li><span class="en">Sourcing from China, selling globally</span><span class="cn">从中国采购，向全球卖货</span></li>
+          <li><span class="en">Can demo your stack architecture — real systems, not slides</span><span class="cn">能现场展示系统架构——我们看真实后台，不看 PPT</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="en">What You'll Get</span><span class="cn">你能带走什么</span></h3>
+        <div class="kv-block">
+          <div><span class="k">access</span><span class="v"><span class="en">WF API engineers, in person</span><span class="cn">面对面抓 WF 的 API 工程师问到底</span></span></div>
+          <div><span class="k">sandbox</span><span class="v"><span class="en">hands-on integration, live</span><span class="cn">真机环境现场调试，不是只读文档</span></span></div>
+          <div><span class="k">influence</span><span class="v"><span class="en">shape the product roadmap</span><span class="cn">你的痛点直接进产品路线图</span></span></div>
+          <div><span class="k">network</span><span class="v"><span class="en">operators building the same future</span><span class="cn">认识同路人，以后互相救急</span></span></div>
+        </div>
+        <p style="margin-top: 16px; font-family: var(--font-mono); font-size: 11px; color: var(--wf-text-muted);">
+          <span class="en">screening: "Show me your automation stack."<br>If you can answer with specifics, you're in.</span>
+          <span class="cn">入场暗号："Show me your stack."<br>答得出技术细节，直接进。</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== THREE PHASES ======== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">03 — <span class="en">Format</span><span class="cn">三小时怎么过</span></div>
+    <h2>
+      <span class="en">Three phases, one afternoon</span>
+      <span class="cn">三段式，只出活儿，不闲聊</span>
+    </h2>
+    <p class="section-desc">
+      <span class="en">Structured to produce real output — not just conversation.</span>
+      <span class="cn">结构紧凑，每步都要有交付物。</span>
+    </p>
+    <div class="phases">
+      <div class="phase-card">
+        <div class="phase-num">01</div>
+        <h3><span class="en">Show Your Stack</span><span class="cn">亮底牌</span></h3>
+        <div class="dur">90 min</div>
+        <p>
+          <span class="en">Demo your automation workflow end-to-end. Where does payment break?</span>
+          <span class="cn">现场演示你的自动化链路。卡住的那一步，当场指出来。</span>
+        </p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">02</div>
+        <h3><span class="en">Build Together</span><span class="cn">硬接 API</span></h3>
+        <div class="dur">90 min</div>
+        <p>
+          <span class="en">Attempt real integration with WF sandbox. Every error message is data.</span>
+          <span class="cn">接入 WorldFirst Sandbox，真刀真枪调接口。报错信息当场贴到共享文档。</span>
+        </p>
+      </div>
+      <div class="phase-card">
+        <div class="phase-num">03</div>
+        <h3><span class="en">Debrief</span><span class="cn">拍板</span></h3>
+        <div class="dur">60 min</div>
+        <p>
+          <span class="en">What's missing? What would make you switch? Rank the top 5.</span>
+          <span class="cn">缺什么功能？什么能让你明天就迁移？现场投票，排出 TOP 5。</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== FOOTER ======== -->
+<footer class="footer" id="apply">
+  <div class="footer-inner">
+    <div class="footer-logistics">
+      <strong>Shenzhen 深圳</strong><br>
+      <span class="en">Half Day · ~10 People · Spring 2026</span>
+      <span class="cn">2026 年春 · 半天 · 只约 10 人</span><br>
+      <span class="en" style="font-size:12px; color:rgba(255,255,255,0.35);">Apply below ↓</span>
+      <span class="cn" style="font-size:12px; color:rgba(255,255,255,0.35);">↓ 下面申请，满员即止 ↓</span>
+    </div>
+    <div class="qr-placeholder">
+      <span>[ QR ]</span>
+      <span class="zh-label">扫码报名</span>
+      <span>scan to apply</span>
+    </div>
+    <div class="footer-brand">
+      <div class="collab">OpenClaw<span class="x">×</span><span style="font-family:var(--font-cn)">万里汇</span></div>
+      <div class="tagline">
+        <span class="en">The future of commerce is autonomous.<br>The future of payments should be too.</span>
+        <span class="cn">让交易像自动化一样流畅。<br>让支付不再卡脖子。</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.classList.toggle('active', btn.textContent.trim() === (lang === 'en' ? 'EN' : '中文'));
+  });
+}
+</script>
+</body>
+</html>

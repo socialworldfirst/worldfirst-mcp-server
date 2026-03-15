@@ -48,6 +48,7 @@
     .wf-nav-links { display: flex; gap: 32px; list-style: none; }
     .wf-nav-links a { text-decoration: none; color: var(--wf-dark); font-size: 16px; font-weight: 400; transition: color 0.2s; }
     .wf-nav-links a:hover { color: var(--wf-red); }
+    .wf-nav-links a.active { color: var(--wf-red); font-weight: 500; }
     .wf-nav-right { display: flex; align-items: center; gap: 12px; }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 24px; border-radius: 50px; font-family: var(--font); font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; border: none; transition: all 0.2s; }
     .btn-outline { background: transparent; color: var(--wf-red); border: 1px solid var(--wf-red); }
@@ -371,9 +372,9 @@
         <img src="https://mdn.marmot-cloud.com/worldfirst/sites/15/2026/02/20260209154944733.webp" alt="Ant International | WorldFirst">
       </a>
       <ul class="wf-nav-links">
-        <li><a href="https://www.worldfirst.com/uk/product/" target="_blank">Business</a></li>
-        <li><a href="https://www.worldfirst.com/uk/enterprise/" target="_blank">Enterprise</a></li>
-        <li><a href="https://www.worldfirst.com/uk/about-worldfirst/" target="_blank">About Us</a></li>
+        <li><a href="index.html">API</a></li>
+        <li><a href="openclaw.html" class="active">OpenClaw</a></li>
+        <li><a href="workshop.html"><span class="en">Workshop</span><span class="cn">实战闭门会</span></a></li>
       </ul>
     </div>
     <div class="wf-nav-right">

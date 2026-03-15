@@ -91,6 +91,11 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--wf-dark); }
+    .nav-links a.active { color: var(--wf-red); }
+    .nav-site { display: flex; gap: 24px; align-items: center; margin-right: 24px; padding-right: 24px; border-right: 1px solid var(--wf-border); }
+    .nav-site a { text-decoration: none; color: var(--wf-text-light); font-size: 13px; font-weight: 500; transition: color 0.2s; }
+    .nav-site a:hover { color: var(--wf-dark); }
+    .nav-site a.active { color: var(--wf-red); }
 
     /* ---- BUTTONS ---- */
     .btn {
@@ -828,6 +833,11 @@
       <span class="tag">API</span>
     </a>
     <div class="nav-links">
+      <div class="nav-site">
+        <a href="index.html" class="active">API</a>
+        <a href="openclaw.html">OpenClaw</a>
+        <a href="workshop.html">Workshop</a>
+      </div>
       <a href="#features">Features</a>
       <a href="#platforms">Platforms</a>
       <a href="#use-cases">Use Cases</a>
